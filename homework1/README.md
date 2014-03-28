@@ -1,14 +1,40 @@
 Homework 1: Basic Charts
 ==============================
 
-| **Name**  | [YOUR NAME]  |
+| **Name**  | ASHISH THAKUR  |
 |----------:|:-------------|
-| **Email** | [USERNAME]@dons.usfca.edu |
+| **Email** | athakur2@dons.usfca.edu |
 
 ## Instructions ##
 
-[INSTRUCTIONS: Include instructions on how to run your code. See [`homework0`](../homework0) for an example.]
+Following packages should be installed before running this code:
+- `ggplot2`
+-  'sqldf'
+-  'scales'
+
+I feel more comfortable using sql as compared to native r functions for data manipulations thats why i have used sqldf package.
 
 ## Discussion ##
 
-[DISCUSSION: Include a discussion here if required by the assignment.]
+###Plot 1: Scatterplot
+
+
+
+![IMAGE](hw1-scatter.png)
+
+
+###Plot 2: Bar Chart
+
+
+![IMAGE](hw1-bar.png)
+
+###Plot 3: Small Multiples
+
+
+![IMAGE](hw1-multiples.png)
+
+
+###Plot 4: Multi-Line Chart
+
+
+![IMAGE](hw1-multilines.png)
