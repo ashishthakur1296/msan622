@@ -1,10 +1,10 @@
 MSAN 622 Data Visualization
 ==============================
 
-| **Name**  | [YOUR NAME] |
+| **Name**  | [Ashish Thakur] |
 |----------:|:------------|
-| **Email** | [USERNAME]@dons.usfca.edu |
+| **Email** | athakur2@dons.usfca.edu |
 
 ## About Me ##
 
-[BIO: Fill in a brief bio about yourself here. Keep it between 1 and 3 sentences.]
+[BIO: Hi there. I am Ashish.]

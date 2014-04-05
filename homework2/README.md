@@ -1,9 +1,9 @@
 Homework 2: Interactivity
 ==============================
 
-| **Name**  | [YOUR NAME]  |
+| **Name**  | [Ashish Thakur]  |
 |----------:|:-------------|
-| **Email** | [USERNAME]@dons.usfca.edu |
+| **Email** | [athakur2@dons.usfca.edu |
 
 ## Instructions ##
 
@@ -11,6 +11,9 @@ The following packages must be installed prior to running this code:
 
 - `ggplot2`
 - `shiny`
+- `sqldf`
+- `RcolorBrewer`
+- `scales`
 
 To run this code, please enter the following commands in R:
 
