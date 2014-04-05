@@ -41,7 +41,7 @@ Both scatter plot and table get updated as the filters are changed and thus the 
 
 When in default mode i.e. with no filters applied it takes a while for the whole table to appear however with filters applied it works pretty fast.
 
-## Addiditional Customizations : ##
+## Additional Customizations : ##
 
 1) I have used `theme_bw()` as it give a nice white background and makes the colored dots stand out more prominently irrespective of the palette used. 
 Also i find it aesthetically more pleasing as it gels well with the page background.
