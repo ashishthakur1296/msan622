@@ -31,7 +31,7 @@ By looking at this comparison plot we find out that JFK's speeches in 1961 and 1
 
 ![IMAGE](sotuplot.png)
 
-The word cloud is based on all three speeches from 1961-1963.
+The word cloud is based on all three speeches from 1961-1963. We can clearly see which are the most prominent words. Also we can see how porter stemmer has stemmed the words and we can see the corresponding root words.
 
 ![IMAGE](sotuwordcloud.png)
 
@@ -43,6 +43,8 @@ Here is the link to the source data:
 Here is the link to the visualization:
 
 `http://www-958.ibm.com/software/analytics/manyeyes/visualizations/soldier`
+
+As can be seen from the visualization which phrases follow the world soldier in the text.
 
 ![IMAGE](wordtree.png)
 
