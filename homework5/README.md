@@ -48,7 +48,9 @@ Here is the Circular Heat Map:
 
 ## Additional Customizations ##
 
--For the multiline Plot i was having trouble to display the year month horizontally so i tilted x axis labels at 45 degrees. 
+-For the multiline Plot i was having trouble to display the year month horizontally so i tilted x axis labels at 45 degrees.
+ 
 -Changed Legend headings, removed axis tick marks from heatmaps, removed extra space from the axis by using `expand`, supressed y axis labels on star plots
+
 -Adjusted title and axes text sizes and altered the coordinate ratio of heatmaps to make it more aesthetically pleasing.
 
