@@ -1,9 +1,9 @@
 Final Project
 ==============================
 
-| **Name**  | [YOUR NAME]  |
+| **Name**  | Ashish Thakur  |
 |----------:|:-------------|
-| **Email** | [USERNAME]@dons.usfca.edu |
+| **Email** | athakur2@dons.usfca.edu |
 
 ## Discussion ##
 

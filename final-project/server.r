@@ -12,9 +12,13 @@ library(reshape)
 #source('leaflet.r')
 loadData <-function(){
 # Read Data
-BRM2010 <- read.csv("C:/Users/Sunny/Desktop/Spring mod2/Data Visualizations/Project Data/Modified/Bilateral_Remittance_Matrix_2010_csv.csv")
-BRM2011 <- read.csv("C:/Users/Sunny/Desktop/Spring mod2/Data Visualizations/Project Data/Modified/Bilateral_Remittance_Matrix_2011_csv.csv")
-BRM2012 <- read.csv("C:/Users/Sunny/Desktop/Spring mod2/Data Visualizations/Project Data/Modified/Bilateral_Remittance_Matrix_2012_csv.csv")
+#BRM2010 <- read.csv("C:/Users/Sunny/Desktop/Spring mod2/Data Visualizations/Project Data/Modified/Bilateral_Remittance_Matrix_2010_csv.csv")
+#BRM2011 <- read.csv("C:/Users/Sunny/Desktop/Spring mod2/Data Visualizations/Project Data/Modified/Bilateral_Remittance_Matrix_2011_csv.csv")
+#BRM2012 <- read.csv("C:/Users/Sunny/Desktop/Spring mod2/Data Visualizations/Project Data/Modified/Bilateral_Remittance_Matrix_2012_csv.csv")
+BRM2010 <- read.csv("Bilateral_Remittance_Matrix_2010_csv.csv")
+BRM2011 <- read.csv("Bilateral_Remittance_Matrix_2011_csv.csv")
+BRM2012 <- read.csv("Bilateral_Remittance_Matrix_2012_csv.csv")
+
 #Removing Total Column
 BRM2010<-BRM2010[,!(names(BRM2010) %in% 'Total')]
 BRM2011<-BRM2011[,!(names(BRM2011) %in% 'Total')]
@@ -67,6 +71,12 @@ get_Bar_Out<-function(df, countryCount,year){
     axis.text.y = element_text(size = 20, hjust = 1, colour = "black"),
     plot.title=element_text(size = 40, colour = "brown"),
     axis.title = element_text(size=30,colour= "brown"))
+	bp<-bp+
+    theme( # remove the vertical grid lines
+           panel.grid.major.y = element_blank() #,
+           # explicitly set the horizontal lines (or they will disappear too)
+           #panel.grid.major.x = element_line( size=.1, color="black" ) 
+    )
     return(bp)
 }
 get_Bar_In<-function(df, countryCount,year){
@@ -84,64 +94,18 @@ get_Bar_In<-function(df, countryCount,year){
     axis.text.y = element_text(size = 20, hjust = 1, colour = "black"),
     plot.title=element_text(size = 40, colour = "brown"),
     axis.title = element_text(size=30,colour= "brown"))
+	bp<-bp+
+    theme( # remove the vertical grid lines
+           panel.grid.major.y = element_blank() #,
+           # explicitly set the horizontal lines (or they will disappear too)
+           #panel.grid.major.x = element_line( size=.1, color="black" ) 
+    )
     return(bp)
 }
 
-
-# Bubble Chart Code:
-get_Bubble<-function(df, size_var, col_var){
-#  browser()
-    #Create plot
-    #View(df)
-    p<-ggplot(df,aes(x=Population, y = Income))+geom_point(aes_string(color=col_var, size = size_var),alpha=1, position="jitter")+geom_text(aes(label = Abbrev))+scale_size_continuous(range = c(8,35))+ labs(title="Bubble Chart")+theme_bw()+theme(axis.text.x = element_text(size = 12), axis.text.y = element_text(size = 12)) +theme(plot.title = element_text(size=24),axis.title.x = element_text(size=20),axis.title.y = element_text(size=20))
-   
-     return(p)
-}
-
-#Scatter Plot Matrix Code:
-get_ScatterPlot <- function(df, colorby){
-# Load required packages
-require(GGally)
-# Create scatterplot matrix
-p <- ggpairs(df, columns = 1:4,upper = "blank",lower = list(continuous = "points"),diag = list(continuous = "density"),axisLabels = "none",
-    colour = colorby,
-    title = "Scatter Plot Matrix"
-)
-
-# Remove grid from plots along diagonal
-for (i in 1:4) {
-    # Get plot out of matrix
-    inner = getPlot(p, i, i);
-    
-    # Add any ggplot2 settings you want
-    inner = inner + theme_bw();
-
-    # Put it back into the matrix
-    p <- putPlot(p, inner, i, i);
-}
-
-# Show the plot
-print(p)
-
-
- }
-
-
-#Parallel Coordinates Plot Code:
-generateParallel <- function(df,varlst,inp_alpha,para_color) {
-  p <- ggparcoord(data = df,columns = varlst,groupColumn = para_color,order = "anyClass",showPoints = FALSE,shadeBox = NULL,scale = "uniminmax", alphaLines = inp_alpha ) + scale_x_discrete(expand = c(0.02, 0.02))+ scale_y_continuous(expand = c(0.02, 0.02))+ theme_bw()
-  
-  return(p)
-}
 #Shiny Server Code:
 shinyServer(function(input, output,session) {
   localFrame<-globalData
-  filteredData<-reactive({
-    # Handling Multiple values from checkboxes
-    if(length(input$Region)==0){regionlst<-c("Northeast", "South","North Central","West")}
-    else{regionlst<-input$Region}
-    subset(localFrame,Region %in% regionlst)
-    })
   output$bar_plot1<-
     renderPlot({
     p<-get_Bar_Out(df=globalData,
@@ -163,21 +127,32 @@ shinyServer(function(input, output,session) {
     
   output$world_map<-
     renderPlot({
+	if (input$flow == "Outflow") {
+        df<-sqldf(paste('Select origin_country as region,sum(Amount) as Amount from globalData where year=',input$year_heatw,'group by 1'))
+		View(df)
+			}
+		else if (input$flow == "Inflow") {
+        df<-sqldf(paste('Select destination_country as region,sum(Amount) as Amount from globalData where year=',input$year_heatw, 'group by 1'))
+			}
+	df$region[df$region=='United States']<-'USA'
+	df$region[df$region=='Russian Federation']<-'USSR'
 	map.world <- map_data(map = "world")
-	p1 <- ggplot(map.world, aes(x = long, y = lat, group = group, fill = region))
-	#p1 <- ggplot(map.world, aes(x = long, y = lat, group = group))
+	zoro <- merge(map.world,df,sort=FALSE,by = "region")
+	zoro <- zoro[order(zoro$order), ]
+	p1 <- ggplot(zoro, aes(x = long, y = lat, group = group, fill = Amount))
+	#p1 <- ggplot(zoro, aes(x = long, y = lat, group = group))
 	p1 <- p1 + geom_polygon() # fill areas
-	p1 <- p1 + labs(title = "World Map : Remittances Flow") + theme_bw()+theme(legend.position="none")
-	
+	p1 <- p1 + labs(title = "World Map : Remittances Flow") + theme_bw()
+	p1 <- p1 + theme(plot.title=element_text(size = 20, colour = "blue"),axis.text.y = element_blank(),axis.text.x = element_blank(),axis.ticks=element_blank(),panel.border=element_blank(),axis.title=element_blank())
+	p1 <- p1 + opts(panel.grid.major = theme_blank(),
+    panel.grid.minor = theme_blank(),
+    panel.border = theme_blank(),
+    panel.background = theme_blank()) 	
 	print(p1)
     },width=1200,height=800)
    
-  output$heat<- renderPlot({
-	#qw <- melt(loadData())
-	#df <- subset( loadData(), select = -country_sard )
-	#View(df)
-	#final_qw<-subset(qw, country_sard="Russia" & as.numeric(as.character(value))>0,select=country_sard:value)
-	final_qw <- sqldf(paste('Select * from globalData where Amount>','1000','and Amount <','5000'))
+  output$heat<- renderPlot({	
+	final_qw <- sqldf(paste('Select * from globalData where Amount>',input$minr,'and Amount <',input$maxr,'and year=',input$year_heat))
 	p <- ggplot(final_qw, aes(x = origin_country, y = destination_country))
 	p <-p + geom_tile(aes(fill=Amount))+ scale_fill_gradient(low = "black",high = "red")
 	p <- p+labs(list(title="Global Remittance Heat Map",x="Origin Country",y='Destination Country'))+theme_bw()+
@@ -249,7 +224,7 @@ shinyServer(function(input, output,session) {
 		c<-rbind(b,a)
 		}
 		
-		View(c)
+		
 
 		d3Sankey(Links = newdf, Nodes = c, Source = "source",
          Target = "target", Value = "value", NodeID = "name",
