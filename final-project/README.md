@@ -43,13 +43,29 @@ Lie factor for this particular visualization is non existent as it is in accorda
 
 Users can pick which year they want to see and get and idea as to how much money flowed out of or in to a particular country (in aggregate) in that particular year and where does that country stand as compared to others.
 
+By looking at this visualization one quickly learns that USA is the biggest source of remittance outflow whereas India receives the most remittances.
+
+##Technique 2 - Heat Map##
+![IMAGE](heatmap.png)
+
+In this visualization i have tried to take one step further and visualize the remittance relationship amongst countries. The gradient on the heatmap describes the money being transferred. The encoding is same as Technique 1 and i have used sqldf to implement filteration.
+
+Lie factor for this visualization is low as it represents the underlying data as such. I have tried to keep the data to ink ratio low however its more than what we saw in technique 1. The chalenge i had in this particular visualization was that the data was very sparse i.e. not all 200 countries send money to each other and there are a large number of zeros in the data. As a result there are blanks in the heat map. Because of these blanks i decided against removing the background grid as it made it hard to comprehend the relationship of colored tiles to countries. Also i didnt remove the border either as it made it look awkward and visually unappealing. As usual I have used theme_bw() so that it merges well with the background and the information stand out. As far as data density is concerned it is flexible. User can interact with the visualization and pick a range of remittance amount and the corresponding countries will be displayed.
+
+E.g. if i am interested in knowing which countries transferred between 1500 million dollar to 2000 million dollars and who were the receivers i can set my min and max sliders accordingly and the corresponding information will be displayed.
+
+Users can pick which year they want to see and get and idea which country transferred how much money to another country.
+
+By looking at this visualization one learns that there are a large number of countries which fall in lowere ranges (e.g. 1 MM to 500 MM) and as one starts increasing the range the number of countries start falling down (e.g. 250 MM to 500 MM). Also one can do quick Year over year comparisons for a particular range and see which new countries are there etc. One can discover many interesting things by playing around with control widgets.
+
+In terms of data density i have kept it flexible again. It was not possible to visualize all 200+ countries simultaneously so i had used range sliders to give user flexibility to focus on a particular range and tinker around.
+
+##Technique 3 - World Heat Map##
+![IMAGE](world_heatmap.png)
 
 
-
-Technique 2 - Heat Map
-Technique 3 - World Heat Map
-Technique 4 - Network Visualization - Single Node
-Technique 5 - Sankey Diagram
+Technique 4 - Interactive Network Visualization - Single Node
+Technique 5 - Interactive Sankey Diagram
 Technique 6 - Network Visualization - Multi Node
 
 
