@@ -2,7 +2,6 @@ library(d3Network)
 library(leafletR)
 library(ggplot2)
 library(shiny)
-library(GGally)
 library(sqldf)
 library(scales)
 library(maps)
@@ -73,7 +72,7 @@ get_Bar_Out<-function(df, countryCount,year){
     axis.title = element_text(size=30,colour= "brown"))
 	bp<-bp+
     theme( # remove the vertical grid lines
-           panel.grid.major.y = element_blank() #,
+           panel.grid.major.y = element_blank(),panel.border = theme_blank()
            # explicitly set the horizontal lines (or they will disappear too)
            #panel.grid.major.x = element_line( size=.1, color="black" ) 
     )
@@ -96,7 +95,7 @@ get_Bar_In<-function(df, countryCount,year){
     axis.title = element_text(size=30,colour= "brown"))
 	bp<-bp+
     theme( # remove the vertical grid lines
-           panel.grid.major.y = element_blank() #,
+           panel.grid.major.y = element_blank(),panel.border = theme_blank()
            # explicitly set the horizontal lines (or they will disappear too)
            #panel.grid.major.x = element_line( size=.1, color="black" ) 
     )
