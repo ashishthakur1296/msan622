@@ -97,7 +97,7 @@ The focus here is same as the previous visualization, however here i have tried 
 
 As one hovers over a particular flow the corresponding amounts are displayed as tool tip. I tried hard to get rid of TWh but could not find a way to do that. I guess it's a bug in the d3Network package. Also as shown below when user changes radio button from outflow to inflow i flip the countries so that the direction of the flow remains same and its more comprehensible.
 
-![IMAGE](Sankey_outflow.png)
+![IMAGE](Sankey_inflow.png)
 
 In terms of lie factor the lie factor is low as the data is being represented as such and the flow width is in proportion to the money being transferred. The data density can be managed by picking the number of countries to be displayed. The data to ink ratio is high in this particular case.
 
